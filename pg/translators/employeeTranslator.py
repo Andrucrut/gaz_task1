@@ -3,8 +3,8 @@ from src.entites.employee import Employee
 from src.models.employeeModel import EmployeeCreateModel, EmployeeRead
 
 class EmployeeTranslator(BaseTranslator[Employee, EmployeeRead]):
-    orm_model = Employee
-    pydantic_model = EmployeeRead
+    entity = Employee
+    model = EmployeeRead
 
     def to_entity(self, employee_create: EmployeeCreateModel) -> Employee:
         return Employee(

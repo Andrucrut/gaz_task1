@@ -3,8 +3,8 @@ from src.models.departmentModel import DepartmentCreate, DepartamentRead
 from src.entites.department import Department
 
 class DepartmentTranslator(BaseTranslator[Department, DepartamentRead]):
-    orm_model = Department
-    pydantic_model = DepartamentRead
+    entity = Department
+    model = DepartamentRead
 
     def to_entity(self, department_create: DepartmentCreate) -> Department:
         return Department(

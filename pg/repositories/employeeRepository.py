@@ -12,7 +12,7 @@ class EmployeeRepository(BaseRepository[Employee, EmployeeRead]):
 
     async def get_employees_by_department(self, department_id: int) -> Sequence[EmployeeRead]:
         result = await self.session.execute(
-            select(self.model).where(self.model.department_id == department_id)
+            select(self.entity).where(self.entity.department_id == department_id)
         )
-        orm_objs = result.scalars().all()
-        return self.translator.to_model_many(orm_objs)
+        entity_objs = result.scalars().all()
+        return self.translator.to_model_many(entity_objs)
