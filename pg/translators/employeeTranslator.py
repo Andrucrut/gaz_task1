@@ -1,13 +1,13 @@
 from pg.translators.base_translator import BaseTranslator
-from src.entites.employee import Employee
-from src.models.employeeModel import EmployeeCreateModel, EmployeeRead
+from src.entites.employee import Employee as EmployeeEntity
+from src.models.employeeModel import EmployeeCreate, Employee as EmployeeModel
 
-class EmployeeTranslator(BaseTranslator[Employee, EmployeeRead]):
-    entity = Employee
-    model = EmployeeRead
+class EmployeeTranslator(BaseTranslator[EmployeeEntity, EmployeeModel]):
+    entity = EmployeeEntity
+    model = EmployeeModel
 
-    def to_entity(self, employee_create: EmployeeCreateModel) -> Employee:
-        return Employee(
+    def to_entity(self, employee_create: EmployeeCreate) -> EmployeeEntity:
+        return EmployeeEntity(
             first_name=employee_create.first_name.strip(),
             last_name=employee_create.last_name.strip(),
             middle_name=employee_create.middle_name.strip(),

@@ -16,7 +16,7 @@ class DepartmentCreate(DepartmentBase):
     pass
 
 
-class DepartamentRead(DepartmentBase):
+class DepartmentRead(DepartmentBase):
     id: int
     created_at: datetime
 

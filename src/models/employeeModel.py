@@ -4,7 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 
 
-class EmployeeModel(BaseModel):
+class EmployeeBase(BaseModel):
     first_name: str
     last_name: str
     middle_name: str
@@ -16,18 +16,18 @@ class EmployeeModel(BaseModel):
     department_id: int
 
 
-class EmployeeCreateModel(EmployeeModel):
+class EmployeeCreate(EmployeeBase):
     pass
 
 
-class EmployeeRead(EmployeeModel):
+class Employee(EmployeeBase):
     id: int
 
     class Config:
         orm_mode = True
 
 
-class EmployeeUpdateModel(BaseModel):
+class EmployeeUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     middle_name: Optional[str] = None
