@@ -1,31 +1,29 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends
 from typing import List
 
-from src.models.employeeModel import EmployeeCreateModel, EmployeeRead
-from pg.connection import get_async_session
-from pg.repositories.employeeRepository import EmployeeRepository
-from pg.translators.employeeTranslator import EmployeeTranslator
+from src.models.employeeModel import EmployeeCreate, EmployeeRead
+from pg.manager import DBManager
 
 router = APIRouter(prefix="/employees", tags=["employees"])
 
-translator = EmployeeTranslator()
-
 @router.post("/", response_model=EmployeeRead)
-async def create_employee(employee: EmployeeCreateModel, db: AsyncSession = Depends(get_async_session)):
-    repo = EmployeeRepository(db)
-    employee_entity = translator.to_entity(employee)
-    employee_model = await repo.add(employee_entity)
-    return employee_model
+async def create_employee(
+    employee: EmployeeCreate,
+    db_manager: DBManager = Depends(DBManager)
+):
+    return await db_manager.employee_repo.add_model(employee)
+
 
 @router.get("/by_department/{department_id}", response_model=List[EmployeeRead])
-async def get_employees_by_department(department_id: int, db: AsyncSession = Depends(get_async_session)):
-    repo = EmployeeRepository(db)
-    employees = await repo.get_employees_by_department(department_id)
-    return employees
+async def get_employees_by_department(
+    department_id: int,
+    db_manager: DBManager = Depends(DBManager)
+):
+    return await db_manager.employee_repo.get_employees_by_department(department_id)
+
 
 @router.get("/", response_model=List[EmployeeRead])
-async def get_employees(db: AsyncSession = Depends(get_async_session)):
-    repo = EmployeeRepository(db)
-    employees = await repo.get_all()
-    return employees
+async def get_employees(
+    db_manager: DBManager = Depends(DBManager)
+):
+    return await db_manager.employee_repo.get_all()

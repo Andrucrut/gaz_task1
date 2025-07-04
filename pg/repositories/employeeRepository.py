@@ -4,9 +4,9 @@ from src.entites.employee import Employee
 from typing import Sequence
 from pg.repositories.base_repository import BaseRepository
 from pg.translators.employeeTranslator import EmployeeTranslator
-from src.models.employeeModel import EmployeeRead
+from src.models.employeeModel import EmployeeRead, EmployeeCreate, EmployeeUpdate
 
-class EmployeeRepository(BaseRepository[Employee, EmployeeRead]):
+class EmployeeRepository(BaseRepository[Employee, EmployeeRead, EmployeeCreate, EmployeeUpdate]):
     def __init__(self, session: AsyncSession):
         super().__init__(session, Employee, EmployeeTranslator())
 
@@ -15,4 +15,4 @@ class EmployeeRepository(BaseRepository[Employee, EmployeeRead]):
             select(self.entity).where(self.entity.department_id == department_id)
         )
         entity_objs = result.scalars().all()
-        return self.translator.to_model_many(entity_objs)
+        return self.translator.to_model_many(list(entity_objs))

@@ -37,3 +37,6 @@ class EmployeeUpdate(BaseModel):
     position: Optional[str] = None
     salary: Optional[Decimal] = None
     department_id: Optional[int] = None
+
+
+EmployeeRead = Employee

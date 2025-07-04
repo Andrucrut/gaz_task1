@@ -4,46 +4,52 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from pg.translators.base_translator import BaseTranslator
 
 Entity = TypeVar("Entity")
-Model = TypeVar("Model")
+ModelRead = TypeVar("ModelRead")
+ModelCreate = TypeVar("ModelCreate")
+ModelUpdate = TypeVar("ModelUpdate")
 
-class BaseRepository(Generic[Entity, Model]):
-    def __init__(self, session: AsyncSession, entity: Type[Entity], translator: BaseTranslator, model: Type[Model] = None):
+class BaseRepository(Generic[Entity, ModelRead, ModelCreate, ModelUpdate]):
+    def __init__(self, session: AsyncSession, entity: Type[Entity], translator: BaseTranslator):
         self.session = session
         self.entity = entity
         self.translator = translator
-        self.model = model
 
-    async def get(self, obj_id: Any) -> Optional[Model]:
-        result = await self.session.execute(select(self.entity).where(self.entity.id == obj_id))
+    async def get(self, obj_id: Any) -> Optional[ModelRead]:
+        result = await self.session.execute(select(self.entity).where(getattr(self.entity, 'id') == obj_id))
         entity_obj = result.scalar_one_or_none()
         if entity_obj is None:
             return None
         return self.translator.to_model(entity_obj)
 
-    async def get_all(self) -> List[Model]:
+    async def get_all(self) -> List[ModelRead]:
         result = await self.session.execute(select(self.entity))
-        entity_objs = result.scalars().all()
+        entity_objs = list(result.scalars().all())
         return self.translator.to_model_many(entity_objs)
 
-    async def add(self, obj: Entity) -> Model:
-        self.session.add(obj)
+    async def add_model(self, model: ModelCreate) -> ModelRead:
+        entity = self.translator.to_entity(model)
+        self.session.add(entity)
         await self.session.commit()
-        await self.session.refresh(obj)
-        return self.translator.to_model(obj)
+        await self.session.refresh(entity)
+        return self.translator.to_model(entity)
 
-    async def update(self, obj_id: Any, **kwargs) -> Optional[Model]:
-        result = await self.session.execute(select(self.entity).where(self.entity.id == obj_id))
-        obj = result.scalar_one_or_none()
-        if not obj:
+    async def update_model(self, obj_id: Any, model: ModelUpdate) -> Optional[ModelRead]:
+        result = await self.session.execute(
+            select(self.entity).where(getattr(self.entity, 'id') == obj_id)
+        )
+        entity = result.scalar_one_or_none()
+        if not entity:
             return None
-        for key, value in kwargs.items():
-            setattr(obj, key, value)
+        update_data = model.model_dump(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(entity, key, value)
+
         await self.session.commit()
-        await self.session.refresh(obj)
-        return self.translator.to_model(obj)
+        await self.session.refresh(entity)
+        return self.translator.to_model(entity)
 
     async def delete(self, obj_id: Any) -> bool:
-        result = await self.session.execute(select(self.entity).where(self.entity.id == obj_id))
+        result = await self.session.execute(select(self.entity).where(getattr(self.entity, 'id') == obj_id))
         obj = result.scalar_one_or_none()
         if not obj:
             return False

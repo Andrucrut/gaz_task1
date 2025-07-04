@@ -1,10 +1,10 @@
 from pg.translators.base_translator import BaseTranslator
-from src.models.departmentModel import DepartmentCreate, DepartamentRead
+from src.models.departmentModel import DepartmentCreate, DepartmentRead
 from src.entites.department import Department
 
-class DepartmentTranslator(BaseTranslator[Department, DepartamentRead]):
+class DepartmentTranslator(BaseTranslator[Department, DepartmentRead]):
     entity = Department
-    model = DepartamentRead
+    model = DepartmentRead
 
     def to_entity(self, department_create: DepartmentCreate) -> Department:
         return Department(
@@ -14,4 +14,3 @@ class DepartmentTranslator(BaseTranslator[Department, DepartamentRead]):
             description=department_create.description,
             phone_number=department_create.phone_number
         )
-
