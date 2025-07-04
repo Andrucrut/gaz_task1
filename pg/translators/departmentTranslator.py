@@ -1,13 +1,13 @@
 from pg.translators.base_translator import BaseTranslator
-from src.models.departmentModel import DepartmentCreate, DepartmentRead as DepartmentModel
-from src.entites.department import Department as DepartmentEntity
+from src.models.departmentModel import DepartmentCreate, DepartamentRead
+from src.entites.department import Department
 
-class DepartmentTranslator(BaseTranslator[DepartmentEntity, DepartmentModel]):
-    entity = DepartmentEntity
-    model = DepartmentModel
+class DepartmentTranslator(BaseTranslator[Department, DepartamentRead]):
+    entity = Department
+    model = DepartamentRead
 
-    def to_entity(self, department_create: DepartmentCreate) -> DepartmentEntity:
-        return DepartmentEntity(
+    def to_entity(self, department_create: DepartmentCreate) -> Department:
+        return Department(
             name=department_create.name.strip(),
             code=department_create.code.strip().upper(),
             location=department_create.location.strip(),
