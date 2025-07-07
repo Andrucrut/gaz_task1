@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from pg.connection import Base
+from .project_employees import project_employees
+
 
 class Employee(Base):
     __tablename__ = 'employees'
@@ -17,3 +19,8 @@ class Employee(Base):
     department_id = Column(Integer, ForeignKey("departments.id"))
 
     department = relationship("Department", back_populates="employees")
+    projects = relationship(
+        "Project",
+        secondary=project_employees,
+        back_populates="employees"
+    )

@@ -6,6 +6,7 @@ from pg.manager import DBManager, get_db_manager
 
 router = APIRouter(prefix="/employees", tags=["employees"])
 
+
 @router.post("/", response_model=EmployeeRead)
 async def create_employee(
     employee: EmployeeCreate,

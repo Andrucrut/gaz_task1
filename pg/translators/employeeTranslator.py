@@ -2,6 +2,7 @@ from pg.translators.base_translator import BaseTranslator
 from src.entites.employee import Employee as EmployeeEntity
 from src.models.employeeModel import EmployeeCreate, Employee as EmployeeModel
 
+
 class EmployeeTranslator(BaseTranslator[EmployeeEntity, EmployeeModel]):
     entity = EmployeeEntity
     model = EmployeeModel

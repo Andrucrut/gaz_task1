@@ -6,7 +6,8 @@ from pg.repositories.base_repository import BaseRepository
 from pg.translators.employeeTranslator import EmployeeTranslator
 from src.models.employeeModel import EmployeeRead, EmployeeCreate, EmployeeUpdate
 
-class EmployeeRepository(BaseRepository[Employee, EmployeeRead, EmployeeCreate, EmployeeUpdate]):
+
+class EmployeeRepository(BaseRepository[Employee, EmployeeRead]):
     def __init__(self, session: AsyncSession):
         super().__init__(session, Employee, EmployeeTranslator())
 
