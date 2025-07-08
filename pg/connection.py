@@ -28,6 +28,7 @@ class Database:
 
 
 DB = Database()
+AsyncSessionLocal = DB.AsyncSessionLocal
 
 async def get_async_session():
     async for session in DB.get_session():

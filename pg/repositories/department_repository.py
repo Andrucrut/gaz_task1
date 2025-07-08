@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from pg.repositories.base_repository import BaseRepository
 from src.entites.department import Department
 from pg.translators.department_translator import DepartmentTranslator
-from src.models.department_model import DepartmentRead, DepartmentCreate, DepartmentUpdate
+from src.models.department_model import DepartmentRead
 
 
 class DepartmentRepository(BaseRepository[Department, DepartmentRead]):

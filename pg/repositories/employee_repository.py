@@ -4,7 +4,7 @@ from src.entites.employee import Employee
 from typing import Sequence
 from pg.repositories.base_repository import BaseRepository
 from pg.translators.employee_translator import EmployeeTranslator
-from src.models.employee_model import EmployeeRead, EmployeeCreate, EmployeeUpdate
+from src.models.employee_model import EmployeeRead
 
 
 class EmployeeRepository(BaseRepository[Employee, EmployeeRead]):
