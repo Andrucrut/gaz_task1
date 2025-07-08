@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 
-from src.models.departmentModel import DepartmentCreate, DepartmentRead, DepartmentUpdate
-from src.models.employeeModel import EmployeeRead
-from pg.manager import DBManager, get_db_manager
+from src.models.department_model import DepartmentCreate, DepartmentRead, DepartmentUpdate
+from src.models.employee_model import EmployeeRead
+from pg.manager import DBManager
+from pg.dependencies import get_db_manager
 
 router = APIRouter(prefix="/departments", tags=["departments"])
 

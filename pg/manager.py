@@ -1,9 +1,9 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from pg.connection import get_async_session
-from pg.repositories.employeeRepository import EmployeeRepository
-from pg.repositories.departmentRepository import DepartmentRepository
-from pg.repositories.projectRepository import ProjectRepository
+from pg.repositories.employee_repository import EmployeeRepository
+from pg.repositories.department_repository import DepartmentRepository
+from pg.repositories.project_repository import ProjectRepository
 
 
 class DBManager:
@@ -12,6 +12,3 @@ class DBManager:
         self.employee_repo = EmployeeRepository(session)
         self.department_repo = DepartmentRepository(session)
         self.project_repo = ProjectRepository(session)
-
-async def get_db_manager(session: AsyncSession = Depends(get_async_session)) -> DBManager:
-    return DBManager(session)

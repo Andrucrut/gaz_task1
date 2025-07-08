@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from typing import List
 
-from src.models.employeeModel import EmployeeCreate, EmployeeRead
-from pg.manager import DBManager, get_db_manager
+from src.models.employee_model import EmployeeCreate, EmployeeRead
+from pg.manager import DBManager
+from pg.dependencies import get_db_manager
 
 router = APIRouter(prefix="/employees", tags=["employees"])
 

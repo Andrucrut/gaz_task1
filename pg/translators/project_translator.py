@@ -1,6 +1,6 @@
 from pg.translators.base_translator import BaseTranslator
 from src.entites.project import Project as ProjectEntity
-from src.models.project import Project as ProjectModel, ProjectCreate
+from src.models.project_model import Project as ProjectModel, ProjectCreate
 
 
 class ProjectTranslator(BaseTranslator[ProjectEntity, ProjectModel]):
