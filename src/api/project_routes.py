@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from typing import List
-from pg.dependencies import get_db_manager
+from pg.settings import get_db_manager
 
 from src.models.project_model import Project, ProjectCreate, ProjectUpdate, ProjectRead
 from pg.manager import DBManager

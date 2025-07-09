@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import List
-from pg.dependencies import get_db_manager
+from pg.settings import get_db_manager
 
 from src.models.department_model import DepartmentCreate, DepartmentRead, DepartmentUpdate
 from src.models.employee_model import EmployeeRead

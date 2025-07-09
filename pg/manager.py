@@ -1,8 +1,7 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from pg.repositories.employee_repository import EmployeeRepository
 from pg.repositories.department_repository import DepartmentRepository
 from pg.repositories.project_repository import ProjectRepository
-from pg.connection import AsyncSessionLocal
+from pg.settings import AsyncSessionLocal
 
 
 class DBManager:

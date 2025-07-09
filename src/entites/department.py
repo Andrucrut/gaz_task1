@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
-from pg.connection import Base
+from pg.settings import Base
 
 
 class Department(Base):
