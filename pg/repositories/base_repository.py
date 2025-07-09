@@ -6,6 +6,7 @@ from pg.translators.base_translator import BaseTranslator
 Entity = TypeVar("Entity")
 Model = TypeVar("Model")
 
+
 class BaseRepository(Generic[Entity, Model]):
     def __init__(self, session: AsyncSession, entity: Type[Entity], translator: BaseTranslator):
         self.session = session

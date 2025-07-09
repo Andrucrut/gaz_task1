@@ -1,5 +1,5 @@
 from pg.translators.base_translator import BaseTranslator
-from src.models.departmentModel import DepartmentCreate, DepartmentRead
+from src.models.department_model import DepartmentCreate, DepartmentRead
 from src.entites.department import Department
 
 
